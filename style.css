@@ -1,0 +1,186 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #0f172a;
+    color: #f8fafc;
+}
+
+.container {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+h1, h2 {
+    margin-bottom: 10px;
+}
+
+p {
+    opacity: 0.8;
+}
+
+.menu {
+    margin-top: 40px;
+}
+
+.btn {
+    display: inline-block;
+    margin: 15px;
+    padding: 15px 30px;
+    background: #22c55e;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 12px;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background: #16a34a;
+    transform: scale(1.05);
+}
+
+.btn.small {
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #020617;
+}
+
+.top-bar button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    background: #38bdf8;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#camera-box {
+    text-align: center;
+    padding: 60px;
+    border: 2px dashed #334155;
+    margin: 30px;
+    border-radius: 15px;
+}
+
+.bottom-bar {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.card {
+    background: #020617;
+    margin: 20px auto;
+    padding: 20px;
+    width: 70%;
+    border-radius: 12px;
+    text-align: left;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #38bdf8;
+}
+.camera-wrapper {
+    position: relative;
+    width: 640px;
+    height: 480px;
+}
+
+.camera-wrapper video,
+.camera-wrapper canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 640px;
+    height: 480px;
+}
+
+
+.chat-messages {
+    max-height: 250px;
+    overflow-y: auto;
+    background: #020617;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.chat-message {
+    margin-bottom: 8px;
+}
+
+.chat-message.user {
+    color: #38bdf8;
+    font-weight: bold;
+}
+
+.chat-message.ai {
+    color: #22c55e;
+}
+
+.chat-input {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+}
+
+.chat-input button {
+    padding: 8px 15px;
+    border-radius: 6px;
+    border: none;
+    background: #22c55e;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+}
+
+/* جعل الكاميرا نصف الشاشة */
+.camera-wrapper {
+    position: relative;
+    width: 50vw;          /* نصف عرض الشاشة */
+    max-width: 640px;     /* حد أقصى */
+    aspect-ratio: 4 / 3;  /* نسبة الكاميرا */
+    margin: 30px auto;    /* توسيط */
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+/* الفيديو والكانفس فوق بعض */
+.camera-wrapper video,
+.camera-wrapper canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+

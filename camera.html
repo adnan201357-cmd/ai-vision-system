@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live AI Camera</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <style>
+        /* توحيد مقاس الأزرار بدون تغيير التصميم */
+        .btn{
+            width:220px;
+            text-align:center;
+        }
+
+        .btn.small{
+            width:220px;
+        }
+    </style>
+
+</head>
+<body>
+
+
+
+<script>
+    if (localStorage.getItem("loggedIn") !== "true") {
+        window.location.href = "/";
+    }
+</script>
+
+
+
+<div class="container">
+
+    <select onchange="setLanguage(this.value)" style="padding:6px; margin-bottom:15px;">
+        <option value="en">English</option>
+        <option value="ar">العربية</option>
+        <option value="ms">Malay</option>
+    </select>
+
+    <button class="btn small" onclick="logout()" data-i18n="logout">
+        Logout
+    </button>
+
+    <h1 data-i18n="liveCamera">🎥 Live AI Camera</h1>
+
+    <div class="camera-wrapper">
+        <video id="video" autoplay playsinline></video>
+        <canvas id="overlay"></canvas>
+    </div>
+
+    <button class="btn" onclick="capture()" data-i18n="capture">
+        📸 Capture
+    </button>
+
+    <button class="btn small" onclick="resume()" data-i18n="resume">
+        ▶ Resume
+    </button>
+
+    <button class="btn small" onclick="switchCamera()">
+        🔄 Switch Camera
+    </button>
+
+    <a href="/detections" class="btn small">
+        📦 View Detections
+    </a>
+
+    <div id="infoBox" class="card hidden">
+        <h3 id="objectTitle"></h3>
+
+        <div id="chatArea" style="max-height:200px; overflow-y:auto;"></div>
+
+        <div style="margin-top:10px;">
+            <input type="text"
+                   id="userQuestion"
+                   data-i18n-placeholder="askPlaceholder"
+                   style="width:80%; padding:8px;" />
+
+            <button class="btn small" onclick="sendQuestion()">
+                Send
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function logout() {
+    localStorage.clear();
+    window.location.href = "/";
+}
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+   document.getElementById("userQuestion").addEventListener("keydown", function(e){
+
+      if(e.key==="Enter"){
+         e.preventDefault();
+         sendQuestion();
+      }
+
+   });
+
+});
+</script>
+
+
+<script src="/static/js/i18n.js"></script>
+<script src="/static/js/camera.js"></script>
+
+</body>
+</html>

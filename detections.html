@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detections</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<script>
+    if (localStorage.getItem("loggedIn") !== "true") {
+        window.location.href = "/";
+    }
+</script>
+
+<div class="container">
+
+    <select onchange="setLanguage(this.value)" style="padding:6px; margin-bottom:15px;">
+        <option value="en">English</option>
+        <option value="ar">العربية</option>
+        <option value="ms">Malay</option>
+    </select>
+
+    <h1 data-i18n="detectionsTitle">📦 Saved Detections</h1>
+    <p data-i18n="detectionsDesc">Objects detected and explained by AI</p>
+
+    <div id="detections-list">
+        Loading...
+    </div>
+
+    <a href="/index" class="btn small" data-i18n="back">⬅ Back</a>
+
+</div>
+
+<script>
+fetch("/get_answers")
+.then(response => response.json())
+.then(data => {
+
+    let container = document.getElementById("detections-list");
+
+    if(data.length === 0){
+        container.innerHTML = "<p>No saved detections yet.</p>";
+        return;
+    }
+
+    let html = "";
+
+    data.forEach(item => {
+        html += `
+            <div style="
+                background:white;
+                color:black;
+                padding:20px;
+                margin:15px auto;
+                border-radius:12px;
+                max-width:700px;
+                text-align:left;
+                box-shadow:0 4px 12px rgba(0,0,0,.15);
+            ">
+                <h3>Object: ${item.object}</h3>
+
+                <p>
+                   <strong>Question:</strong><br>
+                   ${item.question}
+                </p>
+
+                <p>
+                   <strong>AI Answer:</strong><br>
+                   ${item.answer}
+                </p>
+
+                <small>${item.date}</small>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+
+})
+.catch(error => {
+   document.getElementById("detections-list").innerHTML =
+   "Failed to load detections.";
+   console.error(error);
+});
+</script>
+
+<script src="/static/js/i18n.js"></script>
+
+</body>
+</html>

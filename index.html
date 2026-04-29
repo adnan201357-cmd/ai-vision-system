@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Vision System</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<script>
+    if (localStorage.getItem("loggedIn") !== "true") {
+        window.location.href = "/";
+    }
+</script>
+
+<div class="container">
+
+    <select onchange="setLanguage(this.value)" style="padding:6px; margin-bottom:15px;">
+        <option value="en">English</option>
+        <option value="ar">العربية</option>
+        <option value="ms">Malay</option>
+    </select>
+
+    <button class="btn small" onclick="logout()" data-i18n="logout">Logout</button>
+
+    <h1 data-i18n="title">🤖 AI Vision System</h1>
+    <p data-i18n="selectAction">Select what you want to do</p>
+
+    <div class="menu">
+        <a href="/camera" class="btn" data-i18n="openCamera">🎥 Open Camera</a>
+        <a href="/detections" class="btn" data-i18n="viewDetections">📦 View Detections</a>
+    </div>
+</div>
+
+<script>
+function logout() {
+    localStorage.clear();
+    window.location.href = "/";
+}
+</script>
+
+<script src="/static/js/i18n.js"></script>
+</body>
+</html>
+
