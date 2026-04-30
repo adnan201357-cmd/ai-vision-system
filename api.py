@@ -18,7 +18,7 @@ client = Groq(api_key="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"
 # ===============================
 # Load YOLO Model
 # ===============================
-model = YOLO("runs/detect/hardware_ai2/weights/best.pt")
+model = YOLO("best.pt")
 
 
 # ===============================
