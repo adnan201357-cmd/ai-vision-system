@@ -12,7 +12,7 @@ CORS(app)
 # ===============================
 # Groq API (من Environment)
 # ===============================
-client = Groq(api_key=os.getenv("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"))
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 # ===============================
 # Load YOLO Model
