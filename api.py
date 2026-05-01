@@ -10,9 +10,11 @@ app = Flask(__name__, template_folder="templates", static_folder="static")
 CORS(app)
 
 # ===============================
-# Groq API (من Environment)
+# Groq API
 # ===============================
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+# يمكنك وضع الـ API Key الخاصة بك هنا مباشرة إذا لم تقم بإضافتها في إعدادات Railway كـ Environment Variable
+api_key = os.getenv("GROQ_API_KEY", "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")
+client = Groq(api_key=api_key)
 
 # ===============================
 # Load YOLO Model
@@ -39,7 +41,7 @@ def detections():
     return render_template("detections.html")
 
 # ===============================
-# Login (بدون قاعدة بيانات مؤقت)
+# Login
 # ===============================
 @app.route("/login", methods=["POST"])
 def login():
@@ -47,7 +49,6 @@ def login():
     username = data.get("username")
     password = data.get("password")
 
-    # login بسيط مؤقت
     if username == "admin" and password == "1234":
         return jsonify({
             "success": True,
@@ -64,7 +65,6 @@ def login():
 # ===============================
 @app.route("/detect_frame", methods=["POST"])
 def detect_frame():
-
     file = request.files["image"]
     img_bytes = file.read()
 
@@ -90,7 +90,7 @@ def detect_frame():
     return jsonify({"detections": detections})
 
 # ===============================
-# AI Chat (بدون DB)
+# AI Chat
 # ===============================
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -100,29 +100,49 @@ def chat():
         question = data.get("question")
 
         prompt = f"""
-You are an educational AI assistant.
+You are an educational AI assistant specialized in computer hardware.
 
 Object: {object_name}
+
 Question: {question}
+
+Answer clearly and simply for students.
 """
 
         response = client.chat.completions.create(
             model="llama-3.1-8b-instant",
-            messages=[{"role": "user", "content": prompt}]
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
         )
 
         answer = response.choices[0].message.content.strip()
 
-        return jsonify({"answer": answer})
+        return jsonify({
+            "answer": answer
+        })
 
     except Exception as e:
         print(e)
-        return jsonify({"answer": "AI service unavailable"})
+        return jsonify({
+            "answer": "AI service unavailable"
+        })
 
 # ===============================
-# Run Server (مهم جدا لـ Render)
+# View Detections Placeholder (تجنبًا لخطأ Get Answers)
+# ===============================
+@app.route("/get_answers")
+def get_answers():
+    # تمت إضافة هذه الدالة لتجنب الخطأ في صفحة detections.html
+    return jsonify([])
+
+# ===============================
+# Run Server
 # ===============================
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
-    print(f"Running on port {port}")
+    print(f"✅ Server Running on port {port}")
     app.run(host="0.0.0.0", port=port)
